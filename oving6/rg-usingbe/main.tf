@@ -17,6 +17,7 @@ provider "azurerm" {
 data "terraform_remote_state" "bejhl1" {  #henter data from backend state fila
   backend = "azurerm"
   config = {
+    resource_group_name   = "rg-be-tfstate-jhl1"
     storage_account_name = "sabejhl1976"                              # There is not environment variable support for this input.
     container_name       = "scbejhl1"                               # There is not environment variable support for this input.
     key                  = "test.terraform.tfstate"                # There is not environment variable support for this input.
