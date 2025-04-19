@@ -1,3 +1,11 @@
+locals {
+  workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}" #om workspace ikke er default, skal navneendelse tilsvare navnet på nåværende workspace
+
+  rg_name = "${var.rg_name}-${local.workspaces_suffix}" #legger til feks dev bak navnet på rg
+  source_file = terraform.workspace == "default" ? "${path.module}/../web/index.html" : "${path.module}/../web/${terraform.workspace}/index.html" #peker på egne filer basert på aktivt workspace
+}
+
+
 resource "random_string" "random_string" {  #til bruk for navn på sa
     length = 8
     special = false
@@ -23,14 +31,20 @@ resource "azurerm_storage_account" "sa_web" {
   }
 
 resource "azurerm_storage_blob" "index_html" {
-    name = var.index_document
+    #name = var.index_document
+    name = "index.html"
     storage_account_name = azurerm_storage_account.sa_web.name
     storage_container_name = "$web" #spesiell reservert kontainer for statiske web hosting
     type = "Block"
     content_type = "text/html"
-    source_content = var.source_content #innhold
+    source = local.source_file #kan ikke ha både source og source content
+    #source_content = var.source_content #innhold
 }
 
 output "primary_web_endpoint" {
   value = azurerm_storage_account.sa_web.primary_web_endpoint  #output er fra index.html
 }
+
+#terraform workspace list - lister alle workspaces som er tilgjengeligte
+#terraform workspace new prod/test/dev - nye workspace for å separere miljø
+#terraform workspace select dev

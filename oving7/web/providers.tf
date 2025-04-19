@@ -8,10 +8,10 @@ terraform {
 
   backend "azurerm" {
       resource_group_name  = "rg-be-tfstate-jhl1"
-      #resource_group_name  = "rg-be-tfstate-jhl1-dev"
       storage_account_name = "sabejhl1976"
       container_name       = "scbejhl1"
-      key                  = "web-jhl.terraform.tfstate" #ikke overskrive eksiterende backend tfstate
+      #key                  = "web-jhl.terraform.tfstate" #ikke overskrive eksiterende backend tfstate
+      key = "terraform-${var.workspace_name}.tfstate"     #kan ikke benytte output, locals, terraform.workspace i en backend blokk, da backend er allered konfigurert
     }
   }
 

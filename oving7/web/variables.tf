@@ -18,7 +18,12 @@ variable "index_document" {
     description = "name of index content"
 }
 
-variable "source_content" {
-    type = string
-    description = "source content for index.html file"
+variable "workspace_name" {
+  type = string
+  description = "workspace name, ie. dev, test and prod"  #value to be entered manually to separate backends for each workspace
 }
+
+#variable "source_content" {
+#    type = string
+#    description = "source content for index.html file"
+#}
