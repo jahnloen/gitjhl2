@@ -1,7 +1,7 @@
 locals {
   workspaces_suffix = terraform.workspace == "default" ? "" : "${terraform.workspace}" #om workspace ikke er default, skal navneendelse tilsvare navnet på nåværende workspace
 
-  rg_name = "${var.rg_name}-${local.workspaces_suffix}" #legger til feks dev bak navnet på rg
+  rg_web = "${var.rg_web}-${local.workspaces_suffix}" #legger til feks dev bak navnet på rg
   source_file = terraform.workspace == "default" ? "${path.module}/../web/index.html" : "${path.module}/../web/${terraform.workspace}/index.html" #peker på egne filer basert på aktivt workspace
 }
 
@@ -13,12 +13,12 @@ resource "random_string" "random_string" {  #til bruk for navn på sa
 }
 
 resource "azurerm_resource_group" "rg_web" {
-    name = var.rg_name
+    name = var.rg_web
     location = var.location
 }
 
 resource "azurerm_storage_account" "sa_web" {
-  name = "${var.sa_name}${random_string.random_string.result}" #vilkårlig navn på sa
+  name = "${var.sa_web}${random_string.random_string.result}" #vilkårlig navn på sa
   resource_group_name = azurerm_resource_group.rg_web.name
   location = azurerm_resource_group.rg_web.location
   account_tier = "Standard"
@@ -31,8 +31,8 @@ resource "azurerm_storage_account" "sa_web" {
   }
 
 resource "azurerm_storage_blob" "index_html" {
-    #name = var.index_document
-    name = "index.html"
+    name = var.index_document
+    #name = "index.html"
     storage_account_name = azurerm_storage_account.sa_web.name
     storage_container_name = "$web" #spesiell reservert kontainer for statiske web hosting
     type = "Block"

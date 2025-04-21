@@ -3,14 +3,16 @@ variable "location" {
     description = "location of resources"
 }
 
-variable "sa_name" {
+variable "sa_web" {
     type = string
     description = "name of sa"
+    default = "saweb"
 }
 
-variable "rg_name" {
+variable "rg_web" {
   type = string
-  description = "name of rg"
+  description = "name of rg for web"
+  default = "rg_webjhl"
 }
 
 variable "index_document" {
@@ -18,10 +20,10 @@ variable "index_document" {
     description = "name of index content"
 }
 
-variable "workspace_name" {
-  type = string
-  description = "workspace name, ie. dev, test and prod"  #value to be entered manually to separate backends for each workspace
-}
+#variable "workspace_name" {
+#  type = string
+#  description = "workspace name, ie. dev, test and prod"  #value to be entered manually to separate backends for each workspace
+#}
 
 #variable "source_content" {
 #    type = string
