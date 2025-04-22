@@ -6,19 +6,19 @@ variable "location" {
 variable "sa_web" {
     type = string
     description = "name of sa"
-    default = "saweb"
+    #default = "sawebjhl"
 }
 
 variable "rg_web" {
   type = string
   description = "name of rg for web"
-  default = "rg_webjhl"
+  #default = "rg_webjhl"
 }
 
-variable "index_document" {
-    type = string
-    description = "name of index content"
-}
+#variable "index_document" {
+#    type = string
+#    description = "name of index content"
+#}
 
 #variable "workspace_name" {
 #  type = string
