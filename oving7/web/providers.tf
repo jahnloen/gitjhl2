@@ -10,8 +10,7 @@ terraform {
       resource_group_name  = "rg-be-tfstate-jhl1"
       storage_account_name = "sabejhl1976"
       container_name       = "scbejhl1"
-      key                  = "test.terraform.tfstate" #ikke overskrive eksiterende backend tfstate
-      #key = "terraform-${terraform.workspace}.tfstate" 
+      key                  = "terraform.tfstate" #ikke overskrive eksiterende backend tfstate
     }
   }
 

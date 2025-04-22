@@ -6,26 +6,15 @@ variable "location" {
 variable "sa_web" {
     type = string
     description = "name of sa"
-    #default = "sawebjhl"
 }
 
 variable "rg_web" {
   type = string
   description = "name of rg for web"
-  #default = "rg_webjhl"
+  default = "rg_webjhl1"
 }
 
-#variable "index_document" {
-#    type = string
-#    description = "name of index content"
-#}
-
-#variable "workspace_name" {
-#  type = string
-#  description = "workspace name, ie. dev, test and prod"  #value to be entered manually to separate backends for each workspace
-#}
-
-#variable "source_content" {
-#    type = string
-#    description = "source content for index.html file"
-#}
+variable "index_document" {
+    type = string
+    description = "name of index content"
+}
