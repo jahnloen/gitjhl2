@@ -9,7 +9,7 @@ terraform {
 }
 provider "azurerm" {
   # Configuration options
-  subscription_id = var.subscription_id #må med etter v4.0
+  #subscription_id = var.subscription_id #må med etter v4.0
   features {                            #required
   }
 }
