@@ -16,6 +16,12 @@ variable "rg_web" {
   default     = "rg_webjhl1"
 }
 
+variable "source_content" {
+  type = string
+  description = "content of index.html "
+  default = "<h1>Made with Terraform - CI/CD - update del 2</h1>"
+}
+
 variable "index_document" {
   type        = string
   description = "name of index content"
