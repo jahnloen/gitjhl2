@@ -7,8 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     paths:
-      - 'course materials/module06/staticwebsite/**'
-
+   #   - 'course materials/module06/staticwebsite/**'
+   'githjl2/oving8/web/**'
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -24,7 +24,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: ./course materials/module06/staticwebsite
+      WORKING_DIR: ./gitjhl2/oving8/web
       
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
