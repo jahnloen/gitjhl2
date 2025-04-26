@@ -7,8 +7,9 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     paths:
-   #   - 'course materials/module06/staticwebsite/**'
-   'githjl2/oving8/web/**'
+      #- 'course materials/module06/staticwebsite/**'
+      - 'githjl2/oving8/web/**'
+
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
