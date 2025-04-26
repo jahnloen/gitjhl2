@@ -7,20 +7,18 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     paths:
-      #- 'course materials/module06/staticwebsite/**'
       - 'GITJHL2/oving8/web/**'
 
-#Allows you to run this workflow manually from the Actions tab
-workflow_dispatch:
-inputs:
-action_type:
-  description: 'What action should be performed? (Apply/Destroy)'
-  required: true
-  default: 'apply'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      action_type:
+        description: 'What action should be performed? (Apply/Destroy)'
+        required: true
+        default: 'apply'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "web"
+  # This workflow contains a single job called "terraform"
   terraform:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
@@ -32,31 +30,30 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       WORKING_DIR: ./GITJHL2/oving8/web
-      
-    # Steps represent a sequence of tasks that will be executed as part of the job
+
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4.1.1
 
-      # Runs a single command using the runners shell
       - name: 'Terraform init'
         id: init
         run: terraform init
-        working-directory: ${{ env.WORKING_DIR }}          
+        working-directory: ${{ env.WORKING_DIR }}
 
       - name: 'Terraform plan'
         id: plan
         run: terraform plan
-        working-directory: ${{ env.WORKING_DIR }} 
-                    
+        working-directory: ${{ env.WORKING_DIR }}
+
       - name: 'Check last commit message'
         id: commit
-        run: echo "::set-output name=message::$(git log --format=%B -n 1)"
+        run: |
+          echo "message=$(git log --format=%B -n 1)" >> $GITHUB_OUTPUT
+
       - name: 'Conditionally run Terraform action'
         run: |
           if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
             terraform destroy -auto-approve
           else
             terraform apply -auto-approve
-          if
-        working-directory: ${{ env.WORKING_DIR }} 
+          fi
+        working-directory: ${{ env.WORKING_DIR }}
