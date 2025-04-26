@@ -10,7 +10,13 @@ on:
       #- 'course materials/module06/staticwebsite/**'
       - 'githjl2/oving8/web/**'
 
-
+#Allows you to run this workflow manually from the Actions tab
+workflow_dispatch:
+inputs:
+action_type:
+  description: 'What action should be performed? (Apply/Destroy)'
+  required: true
+  default: 'apply'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -52,5 +58,5 @@ jobs:
             terraform destroy -auto-approve
           else
             terraform apply -auto-approve
-          fi
+          if
         working-directory: ${{ env.WORKING_DIR }} 
