@@ -11,15 +11,15 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      action_type:
-        description: 'What action should be performed? (Apply/Destroy)'
-        required: true
-        default: 'apply'
-        type: choice
-        options:
-        - 'apply'
-        - 'destroy'
+    #inputs:
+    #  action_type:
+    #    description: 'What action should be performed? (Apply/Destroy)'
+    #    required: true
+    #    default: 'apply'
+    #    type: choice
+    #    options:
+    #    - 'apply'
+    #    - 'destroy'
 
 jobs:
   # This workflow contains a single job called "terraform"
@@ -52,12 +52,12 @@ jobs:
         id: commit
         run: |
           echo "message=$(git log --format=%B -n 1)" >> $GITHUB_OUTPUT
-
-      - name: 'Conditionally run Terraform action'
-        run: |
-          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
-            terraform destroy -auto-approve
-          else
-            terraform apply -auto-approve
-          fi
-        working-directory: ${{ env.WORKING_DIR }}
+      #kommenteres ut, da manuell godkjenning vanligvis ikke trengs for "ikke-prod"
+      #- name: 'Conditionally run Terraform action'
+      #  run: |
+      #    if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
+      #      terraform destroy -auto-approve
+      #    else
+      #      terraform apply -auto-approve
+      #    fi
+      #  working-directory: ${{ env.WORKING_DIR }}
