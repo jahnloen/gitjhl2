@@ -55,7 +55,7 @@ jobs:
           echo "message=$(git log --format=%B -n 1)" >> $GITHUB_OUTPUT
       - name: 'Conditionally run Terraform'
         run: |
-          if [[ "${{steps.commit.outputs.message }}" == *"destroy"* ]]. then
+          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
           terraform destroy -auto-approve
           else
           terraform apply auto-approve
