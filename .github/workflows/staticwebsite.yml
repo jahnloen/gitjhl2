@@ -16,6 +16,10 @@ on:
         description: 'What action should be performed? (Apply/Destroy)'
         required: true
         default: 'apply'
+        type: choice
+        options:
+        - 'apply'
+        - 'destroy'
 
 jobs:
   # This workflow contains a single job called "terraform"
