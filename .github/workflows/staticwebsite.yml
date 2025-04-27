@@ -50,6 +50,8 @@ jobs:
         run: terraform workspace show
         working-directory: ./oving8/web
 
+        
+
       - name: Terraform plan
         id: plan
         run: terraform plan
