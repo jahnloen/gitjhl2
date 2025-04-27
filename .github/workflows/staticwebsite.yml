@@ -52,6 +52,13 @@ jobs:
         id: commit
         run: |
           echo "message=$(git log --format=%B -n 1)" >> $GITHUB_OUTPUT
+      - name: 'Conditionally run Terraform'
+        run: |
+          if [[ "${{steps.commit.outputs.message }}" == *"destroy"* ]]. then
+          terraform destroy -auto-approve
+          else
+          terraform apply auto-approve
+          fi
       #kommenteres ut, da manuell godkjenning vanligvis ikke trengs for "ikke-prod"
       #- name: 'Conditionally run Terraform action'
       #  run: |
