@@ -28,7 +28,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
     
-    name: 'web'
+    name: web
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -40,7 +40,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
 
-      - name: 'Terraform init'
+      - name: Terraform init
         id: init
         run: terraform init
         working-directory: ${{ env.WORKING_DIR }}
@@ -49,12 +49,12 @@ jobs:
         run: terraform workspace show
         working-directory: ./oving8/web
 
-      - name: 'Terraform plan'
+      - name: Terraform plan
         id: plan
         run: terraform plan
         working-directory: ${{ env.WORKING_DIR }}
 
-      - name: 'Check last commit message'
+      - name: Check last commit message
         id: commit
         run: |
           echo "message=$(git log --format=%B -n 1)" >> $GITHUB_OUTPUT
