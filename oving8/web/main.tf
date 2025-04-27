@@ -25,7 +25,7 @@ resource "azurerm_storage_account" "sa_web" {
   resource_group_name      = azurerm_resource_group.rg_web.name
   location                 = azurerm_resource_group.rg_web.location
   account_tier             = "Standard"
-  account_replication_type = "LRS" #local redundant storage
+  account_replication_type = "GRS" #local redundant storage
 }
 
 resource "azurerm_storage_account_static_website" "sta_web" {
