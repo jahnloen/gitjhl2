@@ -90,9 +90,15 @@ jobs:
         run: echo "WEB_ENDPOINT=$(terraform output -raw primary_web_endpoint)" 
         working-directory: ${{ env.WORKING_DIR }}
 
+      - name: Get Commit Message
+        id: commit
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+        working-directory: ${{ env.WORKING_DIR }}
+      
       - name: 'Destroy'
         run: |
           echo "Commit message: ${{ steps.commit.outputs.message }}"
           if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
             terraform destroy -auto-approve
           fi
+        working-directory: ${{ env.WORKING_DIR }}
