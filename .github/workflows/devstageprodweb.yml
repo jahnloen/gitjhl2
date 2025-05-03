@@ -89,3 +89,10 @@ jobs:
         id: get_web_endpoint
         run: echo "WEB_ENDPOINT=$(terraform output -raw primary_web_endpoint)" 
         working-directory: ${{ env.WORKING_DIR }}
+
+      - name: 'Destroy'
+        run: |
+          echo "Commit message: ${{ steps.commit.outputs.message }}"
+          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
+            terraform destroy -auto-approve
+          fi
