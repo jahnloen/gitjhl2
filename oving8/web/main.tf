@@ -51,4 +51,4 @@ resource "azurerm_storage_blob" "index_html" { #avhengig av sa og static website
 #terraform workspace list - lister alle workspaces som er tilgjengeligte
 #terraform workspace new prod/test/dev - nye workspace for å separere miljø
 #terraform workspace select test
-#destroy1
+#destroy
