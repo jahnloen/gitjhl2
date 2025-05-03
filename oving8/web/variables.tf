@@ -19,7 +19,7 @@ variable "rg_web" {
 variable "source_content" {
   type = string
   description = "content of index.html "
-  default = "<h1>Made with Terraform - CI/CD</h1>"
+  default = "<h1>Made with Terraform - Update del1</h1>"
 }
 
 variable "index_document" {
