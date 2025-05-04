@@ -94,19 +94,19 @@ jobs:
           fi
         working-directory: ${{ env.WORKING_DIR }}
      
-      - name: Terraform apply dev
+      - name: Terraform apply stage
         if: steps.conditional_destroy.outputs.destroyed == 'false'
         run: terraform apply -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
      
-      - name: Test dev
+      - name: Test stage
         if: steps.conditional_destroy.outputs.destroyed == 'false'
         run: curl $(terraform output -raw primary_web_endpoint)
         working-directory: ${{ env.WORKING_DIR }}
 
   prod:
     needs: stage_prod
-    if: needs.dev_stage.outputs.destroyed == 'false'
+    if: needs.stage_prod.outputs.destroyed == 'false'
     runs-on: ubuntu-22.04
     environment: 
       name: production
@@ -128,16 +128,30 @@ jobs:
         id: commit
         run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
         working-directory: ${{ env.WORKING_DIR }}
-      
+     
       - name: 'Conditional Destroy'
+        id: conditional_destroy
         run: |
-            echo "Commit message: ${{ steps.commit.outputs.message }}"
-            if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
-              echo "Destroy keyword found. Destroying infra..."
-              terraform destroy -auto-approve
-              exit 0  # stop further steps in this job
-            fi
+          echo "Commit message: ${{ steps.commit.outputs.message }}"
+          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
+            echo "Destroy keyword found. Destroying infra..."
+            terraform destroy -auto-approve
+            echo "destroyed=true" >> $GITHUB_OUTPUT
+          else
+            echo "destroyed=false" >> $GITHUB_OUTPUT
+          fi
         working-directory: ${{ env.WORKING_DIR }}
+     
+      - name: Terraform apply prod
+        if: steps.conditional_destroy.outputs.destroyed == 'false'
+        run: terraform apply -auto-approve
+        working-directory: ${{ env.WORKING_DIR }}
+     
+      - name: Test prod
+        if: steps.conditional_destroy.outputs.destroyed == 'false'
+        run: curl $(terraform output -raw primary_web_endpoint)
+        working-directory: ${{ env.WORKING_DIR }}
+
       
       - name: Terraform apply prod
         if: steps.conditional_destroy.outputs.destroyed == 'false'
