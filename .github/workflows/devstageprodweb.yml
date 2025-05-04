@@ -80,24 +80,26 @@ jobs:
         id: commit
         run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
         working-directory: ${{ env.WORKING_DIR }}
-
+     
       - name: 'Conditional Destroy'
+        id: conditional_destroy
         run: |
           echo "Commit message: ${{ steps.commit.outputs.message }}"
           if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
             echo "Destroy keyword found. Destroying infra..."
             terraform destroy -auto-approve
-            exit 0  # stop further steps in this job
+            echo "destroyed=true" >> $GITHUB_OUTPUT
+          else
+            echo "destroyed=false" >> $GITHUB_OUTPUT
           fi
         working-directory: ${{ env.WORKING_DIR }}
-      
-          else
-      - name: Terraform apply stage
+     
+      - name: Terraform apply dev
         if: steps.conditional_destroy.outputs.destroyed == 'false'
         run: terraform apply -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
-
-      - name: Test stage
+     
+      - name: Test dev
         if: steps.conditional_destroy.outputs.destroyed == 'false'
         run: curl $(terraform output -raw primary_web_endpoint)
         working-directory: ${{ env.WORKING_DIR }}
