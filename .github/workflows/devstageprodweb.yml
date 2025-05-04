@@ -27,6 +27,22 @@ jobs:
       - name: Terraform workspace select or create dev
         run: terraform workspace select dev || terraform workspace new dev
         working-directory: ${{ env.WORKING_DIR }}
+
+       #Check for destroy before doing anything else
+      - name: Get Commit Message
+        id: commit
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+        working-directory: ${{ env.WORKING_DIR }}
+
+      - name: 'Conditional Destroy'
+        run: |
+          echo "Commit message: ${{ steps.commit.outputs.message }}"
+          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
+            echo "Destroy keyword found. Destroying infra..."
+            terraform destroy -auto-approve
+            exit 0  # stop further steps in this job
+          fi
+        working-directory: ${{ env.WORKING_DIR }}
       
       - name: Terraform apply dev
         run: terraform apply -auto-approve
@@ -34,19 +50,6 @@ jobs:
 
       - name: Test dev
         run: curl $(terraform output -raw primary_web_endpoint)
-        working-directory: ${{ env.WORKING_DIR }}
-
-      - name: Get Commit Message
-        id: commit
-        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-        working-directory: ${{ env.WORKING_DIR }}
-      
-      - name: 'Destroy'
-        run: |
-          echo "Commit message: ${{ steps.commit.outputs.message }}"
-          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
-            terraform destroy -auto-approve
-          fi
         working-directory: ${{ env.WORKING_DIR }}
 
   stage_prod:
@@ -63,6 +66,22 @@ jobs:
       - name: Terraform workspace select or create stage
         run: terraform workspace select stage || terraform workspace new stage
         working-directory: ${{ env.WORKING_DIR }}
+
+        #Check for destroy before doing anything else
+      - name: Get Commit Message
+        id: commit
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+        working-directory: ${{ env.WORKING_DIR }}
+
+      - name: 'Conditional Destroy'
+        run: |
+          echo "Commit message: ${{ steps.commit.outputs.message }}"
+          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
+            echo "Destroy keyword found. Destroying infra..."
+            terraform destroy -auto-approve
+            exit 0  # stop further steps in this job
+          fi
+        working-directory: ${{ env.WORKING_DIR }}
       
       - name: Terraform apply stage
         run: terraform apply -auto-approve
@@ -70,19 +89,6 @@ jobs:
 
       - name: Test stage
         run: curl $(terraform output -raw primary_web_endpoint)
-        working-directory: ${{ env.WORKING_DIR }}
-
-      - name: Get Commit Message
-        id: commit
-        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-        working-directory: ${{ env.WORKING_DIR }}
-      
-      - name: 'Destroy'
-        run: |
-          echo "Commit message: ${{ steps.commit.outputs.message }}"
-          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
-            terraform destroy -auto-approve
-          fi
         working-directory: ${{ env.WORKING_DIR }}
 
   prod:
@@ -102,6 +108,22 @@ jobs:
       - name: Terraform workspace select or create prod
         run: terraform workspace select prod || terraform workspace new prod
         working-directory: ${{ env.WORKING_DIR }}
+
+      #Check for destroy before doing anything else
+      - name: Get Commit Message
+        id: commit
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+        working-directory: ${{ env.WORKING_DIR }}
+      
+      - name: 'Conditional Destroy'
+        run: |
+            echo "Commit message: ${{ steps.commit.outputs.message }}"
+            if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
+              echo "Destroy keyword found. Destroying infra..."
+              terraform destroy -auto-approve
+              exit 0  # stop further steps in this job
+            fi
+        working-directory: ${{ env.WORKING_DIR }}
       
       - name: Terraform apply prod
         run: terraform apply -auto-approve
@@ -114,17 +136,4 @@ jobs:
       - name: Get Web Endpoint
         id: get_web_endpoint
         run: echo "WEB_ENDPOINT=$(terraform output -raw primary_web_endpoint)" 
-        working-directory: ${{ env.WORKING_DIR }}
-
-      - name: Get Commit Message
-        id: commit
-        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
-        working-directory: ${{ env.WORKING_DIR }}
-      
-      - name: 'Destroy'
-        run: |
-          echo "Commit message: ${{ steps.commit.outputs.message }}"
-          if [[ "${{ steps.commit.outputs.message }}" == *"destroy"* ]]; then
-            terraform destroy -auto-approve
-          fi
         working-directory: ${{ env.WORKING_DIR }}
