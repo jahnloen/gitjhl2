@@ -61,7 +61,7 @@ jobs:
 
   stage_prod:
     needs: dev_stage
-    if: needs.dev_stage.outputs.destroyed == 'false'
+    #if: needs.dev_stage.outputs.destroyed == 'false'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -106,7 +106,7 @@ jobs:
 
   prod:
     needs: stage_prod
-    if: needs.stage_prod.outputs.destroyed == 'false'
+    #if: needs.stage_prod.outputs.destroyed == 'false'
     runs-on: ubuntu-22.04
     environment: 
       name: production
