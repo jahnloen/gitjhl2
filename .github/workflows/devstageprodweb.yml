@@ -28,7 +28,7 @@ jobs:
         run: terraform workspace select dev || terraform workspace new dev
         working-directory: ${{ env.WORKING_DIR }}
 
-       #Check for destroy before doing anything else
+       #Sjekker om skal kjøre destroy, før noe annet kjøres 
       - name: Get Commit Message
         id: commit
         run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
@@ -67,7 +67,7 @@ jobs:
         run: terraform workspace select stage || terraform workspace new stage
         working-directory: ${{ env.WORKING_DIR }}
 
-        #Check for destroy before doing anything else
+        #Sjekker om skal kjøre destroy, før noe annet kjøres 
       - name: Get Commit Message
         id: commit
         run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-22.04
     environment: 
       name: production
-      url: ${{ steps.get_web_endpoint.outputs.WEB_ENDPOINT }} # replace deploy_prod and web_url with actual output variables
+      url: ${{ steps.get_web_endpoint.outputs.WEB_ENDPOINT }} #resetter verdi fra stage og henter verdi for web URL for prod
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
@@ -109,7 +109,7 @@ jobs:
         run: terraform workspace select prod || terraform workspace new prod
         working-directory: ${{ env.WORKING_DIR }}
 
-      #Check for destroy before doing anything else
+      #Sjekker om skal kjøre destroy, før noe annet kjøres 
       - name: Get Commit Message
         id: commit
         run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
