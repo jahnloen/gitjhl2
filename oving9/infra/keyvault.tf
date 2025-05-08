@@ -37,8 +37,26 @@ resource "azurerm_key_vault_secret" "sa_accesskey" {
   ]
 }
 
-resource "azurerm_key_vault_secret" "vm_password" {
-  name         = "${var.vmname}${random_string.random_string.result}"
+resource "azurerm_key_vault_secret" "winvm_password" {
+  name         = "${var.winvm_name}${random_string.random_string.result}"
+  value        = random_password.password.result
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on = [
+    random_password.password
+  ]
+}
+
+resource "azurerm_key_vault_secret" "linvm_password" {
+  name         = "${var.linvm_name}${random_string.random_string.result}"
+  value        = random_password.password.result
+  key_vault_id = azurerm_key_vault.kv.id
+  depends_on = [
+    random_password.password
+  ]
+}
+
+resource "azurerm_key_vault_secret" "mssql_password" {
+  name         = "${var.winvm_name}${random_string.random_string.result}"
   value        = random_password.password.result
   key_vault_id = azurerm_key_vault.kv.id
   depends_on = [

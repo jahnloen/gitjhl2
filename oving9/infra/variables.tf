@@ -1,8 +1,8 @@
 #general variables
 variable "basename" {
-  type = string
+  type        = string
   description = "environment or projectname"
-  default = "jhl"
+  default     = "jhl"
 }
 
 variable "location" {
@@ -28,9 +28,9 @@ variable "sa_accesskey_name" {
 
 #varables for web
 variable "source_content" {
-  type = string
+  type        = string
   description = "content of index.html "
-  default = "<h1>Made with Terraform - Update del1</h1>"
+  default     = "<h1>Made with Terraform - Hello</h1>"
 }
 
 variable "index_document" {
@@ -65,10 +65,10 @@ variable "saname" {
 }
 
 variable "scname" {
-  type = string
+  type        = string
   description = "name of storage container"
-  default = "scname"
-  
+  default     = "scname"
+
 }
 
 #variabler for database
@@ -85,17 +85,36 @@ variable "mssqldbname" {
   default     = "mssqldb-jhl-0"
 }
 
-#variabler for vm
-variable "vmname" {
+variable "mssql_username" {
   type        = string
-  description = "vm name"
-  default     = "vm-jhl-0"
+  description = "msql login name"
+  default     = "mssqladminjhl"
+
 }
 
-variable "vm_username" {
-  type = string
-  description = "Admin Username VM"
-  default = "adminjhl"  
+#variabler for vm
+variable "winvm_name" {
+  type        = string
+  description = "vm name for Windows"
+  default     = "winvm-jhl-0"
+}
+
+variable "winvm_username" {
+  type        = string
+  description = "Admin Username Windows VMs"
+  default     = "winadminjhl1"
+}
+
+variable "linvm_name" {
+  type        = string
+  description = "vm name for Linux"
+  default     = "linvm-jhl-0"
+}
+
+variable "linvm_username" {
+  type        = string
+  description = "Admin Username Linux VMs"
+  default     = "linadminjhl1"
 }
 
 #variabler for vmss
@@ -105,11 +124,11 @@ variable "vmssname" {
   default     = "vmss-jhl-0"
 }
 
-#variable "vmssinstances" {
-#  type        = number
-#  description = "number of vmss instances"
-#  default     = 0
-#}
+variable "vmssinstances" {
+  type        = number
+  description = "number of vmss instances"
+  default     = 0
+}
 
 variable "subnet_id" {
   description = "subnet id"
