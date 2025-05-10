@@ -1,7 +1,8 @@
 resource "azurerm_network_security_group" "nsg" {
-  name                = var.nsgname
-  location            = var.location
-  resource_group_name = var.rgname
+  #name                = var.nsgname
+  name                = "${var.nsgname}-${var.basename}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   #tags                = var.common_tags
 }
 
@@ -15,30 +16,33 @@ resource "azurerm_network_security_rule" "nsgrule" {
   destination_port_range      = "3389"
   source_address_prefix       = "89.10.131.77"
   destination_address_prefix  = "*"
-  resource_group_name         = var.rgname
+  resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = var.vnetname
-  location            = var.location
-  resource_group_name = var.rgname
+  #name                = var.vnetname
+  name                = "${var.vnetname}-${var.basename}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   address_space       = ["10.0.0.0/16"]
   #tags                = var.common_tags #mottar verdi fra rot
 }
 
 resource "azurerm_public_ip" "public_ip" {
-  name                = var.public_ip_name
-  location            = var.location
-  resource_group_name = var.rgname
+  #name                = var.public_ip_name
+  name                = "${var.public_ip_name}-${var.basename}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
   domain_name_label   = var.domain_name_label
   #tags                = var.common_tags
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = var.subnetname
-  resource_group_name  = var.rgname
+  #name                 = var.subnetname
+  name                 = "${var.subnetname}-${var.basename}"
+  resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }

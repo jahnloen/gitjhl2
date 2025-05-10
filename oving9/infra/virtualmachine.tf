@@ -1,21 +1,22 @@
 resource "azurerm_network_interface" "vmnic" { #ressurs flyttes til denne modulen, så variabel ikke trengs å sendes
   name                = "jhl-nic-1"
-  location            = var.location
-  resource_group_name = var.rgname
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = var.subnet_id
+    subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = var.public_ip_id #verdi som skal sendes fra nettverk
+    public_ip_address_id          = azurerm_public_ip.public_ip.id #verdi som skal sendes fra nettverk
   }
 }
 
 resource "azurerm_windows_virtual_machine" "winvm" {
-  name                  = var.winvm_name
-  resource_group_name   = var.rgname
-  location              = var.location
-  size                  = "Standard_B1s"
+  name                = "${var.winvm_name}-${var.basename}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  #size                 = "Standard_F2"
+  size                  = var.winvm_size
   admin_username        = var.winvm_username
   admin_password        = azurerm_key_vault_secret.winvm_password.value
   network_interface_ids = [azurerm_network_interface.vmnic.id] #ikke variabel, da "vmnic" ressursen er i samme modul
@@ -39,13 +40,13 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   name                = "${var.linvm_name}-${var.basename}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  #size                           = "Standard_F2"
-  size                            = "Standard_B1s"
+  size                = var.winvm_size
+  #size                            = "Standard_B1ms"
   admin_username                  = var.linvm_username
   admin_password                  = azurerm_key_vault_secret.linvm_password.value
   disable_password_authentication = false
   network_interface_ids = [
-    azurerm_network_interface.vm_nic.id,
+    azurerm_network_interface.vmnic.id,
   ]
 
   os_disk {
@@ -61,7 +62,7 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   }
 }
 
-output "vm_id" {
-  value = azurerm_windows_virtual_machine.vm.id
-}
+#output "vm_id" {
+#  value = azurerm_windows_virtual_machine.vm.id
+#}
 

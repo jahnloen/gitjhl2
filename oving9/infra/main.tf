@@ -8,7 +8,7 @@
 
 
 resource "azurerm_resource_group" "rg" {
-  name     = var.rgname
+  name     = "${var.rgname}-${var.basename}"
   location = var.location
 }
 
@@ -25,11 +25,12 @@ resource "random_password" "password" {
 }
 
 output "winvm_password" {
-  value     = azurerm_key_vault_secret.vm_password.value
+  #value     = azurerm_key_vault_secret.vm_password.value
+  value     = azurerm_key_vault_secret.winvm_password.value
   sensitive = true
 }
 
 output "linvm_password" {
-  value     = azurerm_key_vault_secret.vm_password.value
+  value     = azurerm_key_vault_secret.linvm_password.value
   sensitive = true
 }

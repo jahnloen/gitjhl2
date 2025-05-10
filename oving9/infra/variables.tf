@@ -2,7 +2,7 @@
 variable "basename" {
   type        = string
   description = "environment or projectname"
-  default     = "jhl"
+  default     = "dev"
 }
 
 variable "location" {
@@ -14,23 +14,25 @@ variable "location" {
 variable "rgname" {
   type        = string
   description = "name of rg"
-  default     = "rgjhl1"
+  default     = "rgjhl0"
 }
 
 #varables for keyvault
 variable "kvname" {
-  type = string
+  type    = string
+  default = "kv0"
 }
 
 variable "sa_accesskey_name" {
-  type = string
+  type    = string
+  default = "sa-accesskey-0"
 }
 
 #varables for web
 variable "source_content" {
   type        = string
   description = "content of index.html "
-  default     = "<h1>Made with Terraform - Hello</h1>"
+  default     = "<h1>Made with Terraform - Hello0</h1>"
 }
 
 variable "index_document" {
@@ -67,28 +69,28 @@ variable "saname" {
 variable "scname" {
   type        = string
   description = "name of storage container"
-  default     = "scname"
+  default     = "scjhl0"
 
 }
 
 #variabler for database
 
-variable "mssqlname" {
+variable "mssqlsrv_name" {
   type        = string
   description = "mssql server name"
   default     = "mssqlsrv-jhl-0"
 }
 
-variable "mssqldbname" {
+variable "mssqldb_name" {
   type        = string
   description = "mssql database name"
   default     = "mssqldb-jhl-0"
 }
 
-variable "mssql_username" {
+variable "mssql_admin" {
   type        = string
   description = "msql login name"
-  default     = "mssqladminjhl"
+  default     = "mssqladminjhl0"
 
 }
 
@@ -102,7 +104,7 @@ variable "winvm_name" {
 variable "winvm_username" {
   type        = string
   description = "Admin Username Windows VMs"
-  default     = "winadminjhl1"
+  default     = "winadminjhl0"
 }
 
 variable "linvm_name" {
@@ -115,6 +117,18 @@ variable "linvm_username" {
   type        = string
   description = "Admin Username Linux VMs"
   default     = "linadminjhl1"
+}
+
+variable "winvm_size" {
+  type        = string
+  description = "SKU model for Windows servers"
+  default     = "Standard_B1ms"
+}
+
+variable "linvm_size" {
+  type        = string
+  description = "SKU model for Linux servers"
+  default     = "Standard_B1ms"
 }
 
 #variabler for vmss
@@ -130,24 +144,11 @@ variable "vmssinstances" {
   default     = 0
 }
 
-variable "subnet_id" {
-  description = "subnet id"
-  type        = string
-  default     = "" #dette betyr blank/tom verdi
-}
-
 variable "public_ip_name" {
   description = "Public IP name"
   type        = string
-  default     = "pubip-jhl-1"
+  default     = "pubip-jhl-0"
 }
-
-variable "public_ip_id" {
-  description = "Public IP name"
-  type        = string
-  default     = ""
-}
-
 
 variable "domain_name_label" {
   description = "name of domain"
