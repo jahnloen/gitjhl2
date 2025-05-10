@@ -4,7 +4,7 @@
 #rgname    = terraform.workspace == "default" ? "${var.rgname}" : "${var.rgname}-${local.workspace_suffix}"
 #web_suffix = "<h1>${terraform.workspace}</h1>"
 #peker på egne filer basert på aktivt workspace. Delt inn i undermapper med hver sin index.html, men tilsvarende skrift. Kunne brukt template her
-#} 1
+#}
 
 
 resource "azurerm_resource_group" "rg" {
