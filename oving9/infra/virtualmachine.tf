@@ -62,7 +62,7 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   }
 }
 
-#output "vm_id" {
-#  value = azurerm_windows_virtual_machine.vm.id
+#output "vmmic_id" {
+#  value = azurerm_windows_virtual_machine.vmnic.id
 #}
 
