@@ -1,6 +1,6 @@
 # This is a basic workflow to deploy your Terraform configuration, after it has been validated
 
-name: Deploy Infrastructure
+#name: Deploy Infrastructure
 
 # Controls when the workflow will run
 on:
@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "deploy"
   terraform:
     runs-on: ubuntu-22.04
-    name: 'Deploy'
+    #name: 'deploy infrastructure'
     # The type of runner that the job will run on
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -27,19 +27,26 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       WORKING_DIR: ./module09/infra  #legg til sti
 
-
-        #steps/secquence of tasks for the job
+      #steps/secquence of tasks for the job
     steps:
-    -uses: actions/checkout@v4.1.1
-    #initialize Terraform
-    -name: Teraaform init
-    id: init
-    run: terraform init
-    working-directory: ${{ env.WORKING_DIR }}
-    #Terraform plan
-    name: Terrform plan
-    id: plan
-    run: terraform plan
-    working-directory: ${{ env.WORKING_DIR }}
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+        
+      #initialize Terraform
+      - name: Terraform init
+        id: init
+        run: terraform init
+        working-directory: ${{ env.WORKING_DIR }}
+        
+      #Terraform plan
+      - name: Terrform plan
+        id: plan
+        run: terraform plan
+        working-directory: ${{ env.WORKING_DIR }}
 
-        #Terraform plan
+      #Terraform apply
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        working-directory: ${{ env.WORKING_DIR }}
+
