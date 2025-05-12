@@ -8,13 +8,13 @@ resource "azurerm_network_security_group" "nsg" {
 
 resource "azurerm_network_security_rule" "nsgrule" {
   name                        = "RDP_SSH"
-  priority                    = 100
+  priority                    = 101
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
   source_port_range           = "*"
   #destination_port_range      = "3389"
-  destination_port_ranges     = ["22", "3389"]
+  destination_port_ranges     = ["22", "80", "3389"]
   source_address_prefix       = "89.10.131.77"
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.rg.name
