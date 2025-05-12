@@ -8,7 +8,7 @@ resource "azurerm_network_security_group" "nsg" {
 
 resource "azurerm_network_security_rule" "nsgrule" {
   name                        = "RDP_SSH"
-  priority                    = 105
+  priority                    = 106
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "Tcp"
