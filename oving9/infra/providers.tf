@@ -8,7 +8,7 @@ terraform {
 
   backend "azurerm" {
     resource_group_name  = "rg-be-tfstate-jhl1"
-    storage_account_name = "sabejhl1976"
+    storage_account_name = "sa"
     container_name       = "scbejhl1"
     key                  = "jhl.terraform.tfstate" #ikke overskrive eksiterende backend tfstate
   }

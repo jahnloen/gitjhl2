@@ -63,7 +63,7 @@ variable "subnetname" {
 variable "saname" {
   type        = string
   description = "storage account name"
-  default     = "sajhl0"
+  default     = "sa"
 }
 
 variable "scname" {
