@@ -44,16 +44,21 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   #size                            = "Standard_B1ms"
   admin_username                  = var.linvm_username
   admin_password                  = azurerm_key_vault_secret.linvm_password.value
-  disable_password_authentication = false
-  network_interface_ids           = [azurerm_network_interface.vmnic.id]
-
+  network_interface_ids           = [azurerm_network_interface.vmnic.id
+  ]
+  
+  admin_ssh_key {
+     username   = "adminuser"
+     public_key = file("~/.ssh/id_rsa.pub")
+   }
+  #
+  #disable_password_authentication = false
   #depends_on = [azurerm_network_interface.vmnic]
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
+#}
   source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-focal"
