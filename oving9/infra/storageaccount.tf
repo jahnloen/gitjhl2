@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "sa" {
-  name                     = "${lower(var.saname)}${var.basename}${random_string.random_string.result}" #vilkårlig navn på sa
+  name                     = "${lower(var.saname)}${random_string.random_string.result}" #vilkårlig navn på sa
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -9,7 +9,7 @@ resource "azurerm_storage_account" "sa" {
 resource "azurerm_storage_container" "sc" {
   name = "${var.scname}${var.basename}"
   #storage_account_name  = azurerm_storage_account.sa.name
-  storage_account_id    = azurerm_storage_account.sa.name
+  storage_account_id    = azurerm_storage_account.sa.id
   container_access_type = "private"
 }
 

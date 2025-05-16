@@ -1,8 +1,8 @@
 resource "azurerm_mssql_server" "mssqlserver" {
   #name                         = var.mssqlname
   name                = "${var.mssqlsrv_name}-${var.basename}"
-  resource_group_name = var.rgname
-  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
   version             = "12.0"
   #administrator_login          = var.mssql_username
   administrator_login          = "${var.mssql_admin}-${var.basename}"
