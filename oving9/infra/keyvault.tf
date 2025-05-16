@@ -9,6 +9,11 @@ resource "azurerm_key_vault" "kv" {
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
 
+  network_acls { #block all IPs that are not Azure services
+    bypass         = "AzureServices"
+    default_action = "Deny"
+  }
+
   sku_name = "standard"
 
   access_policy {
@@ -70,3 +75,4 @@ resource "azurerm_key_vault_secret" "mssql_admin_password" {
 
 #sjekk om tfstate filer blir laget:
 #az storage blob list --container-name "sett inn ditt container navn" --account-name "sitt SA navn" --output table
+#https://aquasecurity.github.io/tfsec/v1.28.1/checks/azure/keyvault/specify-network-acl/

@@ -45,7 +45,7 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   admin_username                  = var.linvm_username
   admin_password                  = azurerm_key_vault_secret.linvm_password.value
   disable_password_authentication = false
-  network_interface_ids = [azurerm_network_interface.vmnic.id]
+  network_interface_ids           = [azurerm_network_interface.vmnic.id]
 
   #depends_on = [azurerm_network_interface.vmnic]
 
