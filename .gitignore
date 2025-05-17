@@ -38,4 +38,4 @@ override.tf.json
 terraform.rc
 
 # Ignore SSH secret files
-.pub
+id_rsa
