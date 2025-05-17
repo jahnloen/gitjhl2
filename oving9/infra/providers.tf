@@ -4,6 +4,11 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "4.24.0"
     }
+    template = {
+      source  = "hashicorp/template"
+      version = "~> 2"
+      }
+    }
   }
 
   backend "azurerm" {
