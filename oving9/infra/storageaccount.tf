@@ -2,7 +2,7 @@ resource "azurerm_storage_account" "sa" {
   name                     = "${lower(var.saname)}${random_string.random_string.result}" #vilkårlig navn på sa
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
-  min_tls_version          = "TLS1_2" #removes support for TLS1.0 and 1.1
+  min_tls_version          = "TLS1_3" #removes support for TLS1.0 and 1.1
   account_tier             = "Standard"
   account_replication_type = "LRS" #local redundant storage
 }
