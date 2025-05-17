@@ -9,7 +9,7 @@ terraform {
       version = "~> 2"
       }
     }
-  }
+  
 
   backend "azurerm" {
     resource_group_name  = "rg-be-tfstate-jhl1"
