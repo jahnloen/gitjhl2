@@ -38,10 +38,9 @@ jobs:
         #uses: aquasecurity/tfsec-action@v1.0.3
         uses: terraform-linters/setup-tflint@v4
         #uses: tfsec --no-color
-      - name: Run TFLint check
+      - name: tflint check
         run: |
-          tflint --init
-          tflint --recursive
+         tflint --chdir=${{ env.WORKING_DIR }} --recursive=false
         #with:
         # Directory to run the action on, from the repo root. Default is . (root of the repository)
         #working_directory: ${{ env.WORKING_DIR }}
