@@ -1,6 +1,6 @@
-locals {
-  effective_public_key = var.ssh_public_key
-}
+#locals {
+#  effective_public_key = var.ssh_public_key
+#}
 
 resource "azurerm_network_interface" "vmnic" { #ressurs flyttes til denne modulen, så variabel ikke trengs å sendes
   name                = "jhl-nic-1"
@@ -51,7 +51,7 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   
   admin_ssh_key {
      username   = "adminuser"
-     public_key = local.effective_public_key #value from local on the top
+     public_key = var.ssh_public_key #value from local on the top
    }
    
   #
