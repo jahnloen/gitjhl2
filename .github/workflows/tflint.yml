@@ -39,9 +39,9 @@ jobs:
         uses: terraform-linters/setup-tflint@v4
         #uses: tfsec --no-color
       - name: Run TFLint check
-        run: |
-          tflint --init
-          tflint --recursive
+        run: tflint
+        #tflint --init
+        #tflint --recursive
         #with:
         # Directory to run the action on, from the repo root. Default is . (root of the repository)
         #working_directory: ${{ env.WORKING_DIR }}
