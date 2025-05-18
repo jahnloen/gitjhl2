@@ -1,20 +1,19 @@
 # This is a basic workflow to help validate your Terraform configuration
 
-name: Terraform Security Check
+name: tfsec
 
 # Controls when the workflow will run 
 on:
   workflow_run:
-    workflows: ["Validate Infrastructure"]
+    workflows: ["tflint"]
     types:
       - completed
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "Security Check"
-  terraform:
-    name: 'Security Check'
+  # This workflow contains a single job called "tfsec"
+  tfsec:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
     
