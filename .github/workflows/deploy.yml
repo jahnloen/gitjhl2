@@ -42,7 +42,7 @@ jobs:
       #Terraform plan
       - name: Terrform plan
         id: plan 
-        run: terraform plan -var="ssh_public_key=$SSH_PUBLIC_KEY" -auto-approve
+        run: terraform plan -var="ssh_public_key=$SSH_PUBLIC_KEY"
         working-directory: ${{ env.WORKING_DIR }}
 
       #Terraform apply
