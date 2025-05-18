@@ -9,7 +9,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'module09/infra/**'  #legg til sti
+      - 'oving09/infra/**'  #legg til sti
 
 
 
@@ -25,7 +25,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: ./module09/infra  #legg til sti
+      WORKING_DIR: ./oving09/infra  #legg til sti
 
       #steps/secquence of tasks for the job
     steps:

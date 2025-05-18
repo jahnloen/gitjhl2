@@ -23,13 +23,14 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      WORKING_DIR: ./module09/infra
+      WORKING_DIR: ./oving09/infra
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   #automatically generated for use in GitHub Actions workflows, provides temp access to your repos and expires after the workflow run
       
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under so your job can access it
-      - uses: actions/checkout@master
+      #- uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - name: tfsec
         # You may pin to the exact commit or the version.
         # uses: aquasecurity/tfsec-action@b466648d6e39e7c75324f25d83891162a721f2d6
