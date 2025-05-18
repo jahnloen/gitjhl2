@@ -40,7 +40,7 @@ jobs:
         #uses: tfsec --no-color
       - name: tflint check
         run: |
-         tflint --chdir=${{ env.WORKING_DIR }}
+         tflint --chdir=${{ env.WORKING_DIR }} --recursive=false
         #with:
         # Directory to run the action on, from the repo root. Default is . (root of the repository)
         #working_directory: ${{ env.WORKING_DIR }}
