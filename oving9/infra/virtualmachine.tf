@@ -53,9 +53,6 @@ resource "azurerm_linux_virtual_machine" "linvm" {
      username   = "adminuser"
      public_key = var.ssh_public_key #value from local on the top
    }
-   
-  #
-  #disable_password_authentication = false
   #depends_on = [azurerm_network_interface.vmnic]
   os_disk {
     caching              = "ReadWrite"
