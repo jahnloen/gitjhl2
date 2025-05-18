@@ -10,8 +10,9 @@ resource "azurerm_key_vault" "kv" {
   purge_protection_enabled    = false
 
   network_acls { #block all IPs that are not Azure services
-    bypass         = "AzureServices"
     default_action = "Deny"
+    bypass         = "AzureServices"
+    
   }
 
   sku_name = "standard"
