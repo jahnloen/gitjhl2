@@ -159,7 +159,7 @@ variable "domain_name_label" {
 variable "ssh_public_key" {
   description = "SSH pubkey for linvm"
   type        = string
-  default = "" #dynamic for local CLI run, supplements GITHUB action
+  #default = "" #dynamic for local CLI run, supplements GITHUB action
 }
 
 
