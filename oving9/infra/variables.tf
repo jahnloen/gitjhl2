@@ -156,4 +156,10 @@ variable "domain_name_label" {
   default     = "jhl-domain-0"
 }
 
+variable "ssh_public_key" {
+  description = "SSH pubkey for linvm"
+  type        = string
+  default = "" #dynamic for local CLI run
+}
+
 
