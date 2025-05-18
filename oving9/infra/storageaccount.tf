@@ -9,7 +9,6 @@ resource "azurerm_storage_account" "sa" {
 
 resource "azurerm_storage_container" "sc" {
   name = "${var.scname}${var.basename}"
-  #storage_account_name  = azurerm_storage_account.sa.name
   storage_account_id    = azurerm_storage_account.sa.id
   container_access_type = "private"
 }
@@ -22,12 +21,9 @@ resource "azurerm_storage_account_static_website" "sta_web" {
 resource "azurerm_storage_blob" "index_html" { #avhengig av sa og static website container $web
   name                 = var.index_document
   storage_account_name = azurerm_storage_account.sa.name
-  #storage_account_id   = azurerm_storage_account.sa.name
   storage_container_name = "$web" #spesiell reservert kontainer for statiske web hosting
   type                   = "Block"
   content_type           = "text/html"
-  #source                 = var.source_file #kan ikke ha både source og source content
-  #source_content         = "${var.source_content}${local.web_suffix}"
   source_content = "${var.source_content}}"
 
   depends_on = [
