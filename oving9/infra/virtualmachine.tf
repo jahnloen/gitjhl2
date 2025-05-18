@@ -1,6 +1,6 @@
-locals {
-  effective_public_key = var.ssh_public_key != "" ? var.ssh_public_key : file("~/.ssh/id_rsa.pub")
-}
+#locals {
+#  effective_public_key = var.ssh_public_key
+#}
 
 resource "azurerm_network_interface" "vmnic" { #ressurs flyttes til denne modulen, så variabel ikke trengs å sendes
   name                = "jhl-nic-1"
@@ -19,7 +19,6 @@ resource "azurerm_windows_virtual_machine" "winvm" {
   name                = "${var.winvm_name}-${var.basename}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  #size                 = "Standard_F2"
   size                  = var.winvm_size
   admin_username        = var.winvm_username
   admin_password        = azurerm_key_vault_secret.winvm_password.value
@@ -45,7 +44,6 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = var.linvm_size
-  #size                            = "Standard_B1ms"
   admin_username                  = var.linvm_username
   admin_password                  = azurerm_key_vault_secret.linvm_password.value
   network_interface_ids           = [azurerm_network_interface.vmnic.id
@@ -53,12 +51,8 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   
   admin_ssh_key {
      username   = "adminuser"
-     #public_key = file("~/.ssh/id_rsa.pub")
-     public_key = local.effective_public_key #value from local on the top
+     public_key = var.ssh_public_key #value from local on the top
    }
-   
-  #
-  #disable_password_authentication = false
   #depends_on = [azurerm_network_interface.vmnic]
   os_disk {
     caching              = "ReadWrite"

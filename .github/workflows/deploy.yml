@@ -9,7 +9,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'oving9/infra/**'  #legg til sti
+      - 'oving9/infra/**'  #path in gitrepo
 
 
 
@@ -25,7 +25,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      #SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
+      SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
       WORKING_DIR: ./oving9/infra  #legg til sti
 
       #steps/secquence of tasks for the job
@@ -41,13 +41,13 @@ jobs:
      
       #Terraform plan
       - name: Terrform plan
-        id: plan
-        run: terraform plan
+        id: plan 
+        run: terraform plan -var="ssh_public_key=${SSH_PUBLIC_KEY}"
         working-directory: ${{ env.WORKING_DIR }}
 
       #Terraform apply
       - name: Terraform Apply
         id: apply
-        run: terraform apply -var="ssh_public_key=$SSH_PUBLIC_KEY" -auto-approve
+        run: terraform apply -var="ssh_public_key=${SSH_PUBLIC_KEY}" -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
 

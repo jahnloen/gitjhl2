@@ -10,8 +10,9 @@ resource "azurerm_key_vault" "kv" {
   purge_protection_enabled    = false
 
   network_acls { #block all IPs that are not Azure services
-    bypass         = "AzureServices"
     default_action = "Deny"
+    bypass         = "AzureServices"
+    
   }
 
   sku_name = "standard"
@@ -35,7 +36,6 @@ resource "azurerm_key_vault" "kv" {
 }
 
 resource "azurerm_key_vault_secret" "sa_accesskey" {
-  #name         = var.sa_accesskey_name
   name         = "${var.sa_accesskey_name}-${azurerm_storage_account.sa.name}"
   value        = azurerm_storage_account.sa.primary_access_key
   key_vault_id = azurerm_key_vault.kv.id
@@ -46,7 +46,6 @@ resource "azurerm_key_vault_secret" "sa_accesskey" {
 
 resource "azurerm_key_vault_secret" "winvm_password" {
   name = "${var.mssqlsrv_name}${random_string.random_string.result}"
-  #name     = "${var.winvm_name}-${var.basename}${random_string.random_string.result}"
   value        = random_password.password.result
   key_vault_id = azurerm_key_vault.kv.id
   depends_on = [
@@ -56,7 +55,6 @@ resource "azurerm_key_vault_secret" "winvm_password" {
 
 resource "azurerm_key_vault_secret" "linvm_password" {
   name = "${var.linvm_name}${random_string.random_string.result}"
-  #name     = "${var.linvm_name}-${var.basename}${random_string.random_string.result}"
   value        = random_password.password.result
   key_vault_id = azurerm_key_vault.kv.id
   depends_on = [
@@ -72,6 +70,17 @@ resource "azurerm_key_vault_secret" "mssql_admin_password" {
     random_password.password
   ]
 }
+
+resource "azurerm_key_vault_access_policy" "github_actions" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = var.github_actions_oid  # Pass this in via tfvars or variables
+
+  secret_permissions = [
+    "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
+  ]
+}
+
 
 #sjekk om tfstate filer blir laget:
 #az storage blob list --container-name "sett inn ditt container navn" --account-name "sitt SA navn" --output table
