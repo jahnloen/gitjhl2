@@ -25,4 +25,4 @@ output "linvm_password" {
   sensitive = true
 }
 
-#
+#checks validate->tflint->tfsec->deploy
