@@ -48,7 +48,6 @@ jobs:
       #Terraform apply
       - name: Terraform Apply
         id: apply
-        #run: terraform apply -auto-approve
         run: terraform apply -var="ssh_public_key=$SSH_PUBLIC_KEY" -auto-approve
         working-directory: ${{ env.WORKING_DIR }}
 
