@@ -1,3 +1,7 @@
+locals {
+  effective_public_key = var.ssh_public_key != "" ? var.ssh_public_key : file("~/.ssh/id_rsa.pub")
+}
+
 resource "azurerm_network_interface" "vmnic" { #ressurs flyttes til denne modulen, så variabel ikke trengs å sendes
   name                = "jhl-nic-1"
   location            = azurerm_resource_group.rg.location
@@ -40,7 +44,7 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   name                = "${var.linvm_name}-${var.basename}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  size                = var.winvm_size
+  size                = var.linvm_size
   #size                            = "Standard_B1ms"
   admin_username                  = var.linvm_username
   admin_password                  = azurerm_key_vault_secret.linvm_password.value
@@ -49,8 +53,10 @@ resource "azurerm_linux_virtual_machine" "linvm" {
   
   admin_ssh_key {
      username   = "adminuser"
-     public_key = file("~/.ssh/id_rsa.pub")
+     #public_key = file("~/.ssh/id_rsa.pub")
+     public_key = local.effective_public_key #value from local on the top
    }
+   
   #
   #disable_password_authentication = false
   #depends_on = [azurerm_network_interface.vmnic]

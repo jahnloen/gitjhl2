@@ -132,17 +132,17 @@ variable "linvm_size" {
 }
 
 #variabler for vmss
-variable "vmssname" {
-  type        = string
-  description = "vmss name"
-  default     = "vmss-jhl-0"
-}
+#variable "vmssname" {
+#  type        = string
+#  description = "vmss name"
+#  default     = "vmss-jhl-0"
+#}
 
-variable "vmssinstances" {
-  type        = number
-  description = "number of vmss instances"
-  default     = 0
-}
+#variable "vmssinstances" {
+#  type        = number
+#  description = "number of vmss instances"
+#  default     = 0
+#}
 
 variable "public_ip_name" {
   description = "Public IP name"
@@ -154,6 +154,12 @@ variable "domain_name_label" {
   description = "name of domain"
   type        = string
   default     = "jhl-domain-0"
+}
+
+variable "ssh_public_key" {
+  description = "SSH pubkey for linvm"
+  type        = string
+  default = "" #dynamic for local CLI run
 }
 
 
