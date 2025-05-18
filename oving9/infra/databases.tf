@@ -16,7 +16,6 @@ resource "azurerm_mssql_database" "mssqldb" {
   max_size_gb    = 2
   sku_name       = "S0"
   zone_redundant = false
-  #tags = var.common_tags
 
   lifecycle {
     prevent_destroy = false
