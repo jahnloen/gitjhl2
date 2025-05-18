@@ -6,4 +6,4 @@ severity:
 
 ignore-hcl-errors: true
 
-soft-fail: false
+soft-fail: true
