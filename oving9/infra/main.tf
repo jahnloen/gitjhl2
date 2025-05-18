@@ -24,3 +24,5 @@ output "linvm_password" {
   value     = azurerm_key_vault_secret.linvm_password.value
   sensitive = true
 }
+
+#
