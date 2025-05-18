@@ -163,3 +163,8 @@ variable "ssh_public_key" {
 }
 
 
+variable "github_actions_oid" {
+  description = "GitHUB actions ID"
+  type        = string
+}
+
