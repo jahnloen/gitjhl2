@@ -71,15 +71,15 @@ resource "azurerm_key_vault_secret" "mssql_admin_password" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "github_actions" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.github_actions_oid  # Pass this in via tfvars or variables
+#resource "azurerm_key_vault_access_policy" "github_actions" {
+#  key_vault_id = azurerm_key_vault.kv.id
+#  tenant_id    = data.azurerm_client_config.current.tenant_id
+#  object_id    = var.github_actions_oid  # Pass this in via tfvars or variables
 
-  secret_permissions = [
-    "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
-  ]
-}
+#  secret_permissions = [
+#    "Backup", "Delete", "Get", "List", "Purge", "Recover", "Restore", "Set"
+#  ]
+#}
 
 
 #sjekk om tfstate filer blir laget:
