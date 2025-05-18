@@ -1,5 +1,4 @@
 resource "azurerm_network_security_group" "nsg" {
-  #name                = var.nsgname
   name                = "${var.nsgname}-${var.basename}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -13,7 +12,6 @@ resource "azurerm_network_security_rule" "nsgrule" {
   access            = "Allow"
   protocol          = "Tcp"
   source_port_range = "*"
-  #destination_port_range      = "3389"
   destination_port_ranges     = ["22", "80", "3389"]
   source_address_prefix       = "89.10.131.77"
   destination_address_prefix  = "*"
@@ -21,23 +19,7 @@ resource "azurerm_network_security_rule" "nsgrule" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
-
-#resource "azurerm_network_security_rule" "nsgrulelin" {
-#  name = "SSH_access"
-#  priority = 100
-#  direction = "Inbound"
-#  access = "Allow"
-#  protocol = "Tcp"
-#  source_port_range = "*"
-#  destination_port_range = "22"
-#  destination_address_prefix  = "*"
-#  resource_group_name         = azurerm_resource_group.rg.name
-#  network_security_group_name = azurerm_network_security_group.nsg.name
-#}
-
-
 resource "azurerm_virtual_network" "vnet" {
-  #name                = var.vnetname
   name                = "${var.vnetname}-${var.basename}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -46,7 +28,6 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_public_ip" "public_ip" {
-  #name                = var.public_ip_name
   name                = "${var.public_ip_name}-${var.basename}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -56,7 +37,6 @@ resource "azurerm_public_ip" "public_ip" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  #name                 = var.subnetname
   name                 = "${var.subnetname}-${var.basename}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
