@@ -1,0 +1,9 @@
+severity:
+  minimum: HIGH
+
+#exclude-checks:
+#  - AZU001  # Example: exclude a specific check
+
+ignore-hcl-errors: true
+
+soft-fail: false
